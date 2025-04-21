@@ -18,7 +18,6 @@ const DashboardPage: React.FC = () => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    // Simulate data loading
     const loadData = () => {
       setIsRefreshing(true);
       setTimeout(() => {
@@ -41,7 +40,6 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   const handleRefresh = () => {
-    // Simulate refresh
     setIsRefreshing(true);
     setTimeout(() => {
       setTime(new Date());
@@ -50,22 +48,22 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-      {/* Animated Header */}
+    <div className="space-y-6 p-6 bg-gray-50 min-h-screen">
+      {/* Header */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200/70"
+        className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center">
-              <div className="p-2 bg-indigo-100 rounded-lg mr-4">
+              <div className="p-2 bg-indigo-50 rounded-lg mr-4">
                 <Printer className="text-indigo-600" size={24} />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
                   Production Dashboard
                 </h1>
                 <p className="text-gray-500 mt-1 text-sm md:text-base">
@@ -78,12 +76,12 @@ const DashboardPage: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={handleRefresh}
-              className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-xl transition-colors"
+              className="flex items-center space-x-2 bg-gray-50 hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors border border-gray-200"
             >
               <RefreshCw className={`text-gray-600 ${isRefreshing ? 'animate-spin' : ''}`} size={18} />
               <span className="text-sm font-medium text-gray-700">Refresh</span>
             </motion.button>
-            <div className="flex items-center space-x-2 bg-indigo-100/80 px-4 py-2 rounded-xl">
+            <div className="flex items-center space-x-2 bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100">
               <Clock className="text-indigo-600" size={18} />
               <span className="text-sm font-medium text-indigo-600">
                 {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -93,12 +91,12 @@ const DashboardPage: React.FC = () => {
         </div>
       </motion.div>
       
-      {/* Stats Grid with Animation */}
+      {/* Stats Grid */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
       >
         <StatsCard
           title="Documents Today"
@@ -138,26 +136,26 @@ const DashboardPage: React.FC = () => {
         />
       </motion.div>
       
-      {/* Main Content Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Print Queue Section */}
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-lg border border-gray-200/70"
+          className="lg:col-span-2 bg-white p-5 rounded-xl shadow-sm border border-gray-100"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5">
             <div className="flex items-center mb-3 sm:mb-0">
-              <div className="p-2 bg-indigo-100 rounded-lg mr-3">
+              <div className="p-2 bg-indigo-50 rounded-lg mr-3">
                 <Printer className="text-indigo-600" size={20} />
               </div>
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-gray-800">
                 Print Queue
               </h2>
             </div>
             <div className="flex items-center space-x-3">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
                 {activeJobs.length} Active Jobs
               </span>
               <button className="flex items-center text-sm text-indigo-600 hover:text-indigo-800 font-medium">
@@ -169,7 +167,7 @@ const DashboardPage: React.FC = () => {
         </motion.div>
         
         {/* Right Sidebar */}
-        <div className="space-y-5">
+        <div className="space-y-4">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -185,49 +183,6 @@ const DashboardPage: React.FC = () => {
           >
             <DeliveryStatusCard orders={mockOrders} />
           </motion.div>
-          
-          {/* Quick Actions Card */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="bg-white p-5 rounded-2xl shadow-lg border border-gray-200/70"
-          >
-            <h3 className="flex items-center text-lg font-semibold text-gray-900 mb-4">
-              <Zap className="text-amber-500 mr-2" size={20} />
-              Quick Actions
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              <motion.button 
-                whileHover={{ y: -2 }}
-                className="flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors"
-              >
-                <Plus className="text-blue-600 mb-2" size={20} />
-                <span className="text-sm font-medium text-blue-700">New Job</span>
-              </motion.button>
-              <motion.button 
-                whileHover={{ y: -2 }}
-                className="flex flex-col items-center p-4 bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors"
-              >
-                <BarChart2 className="text-purple-600 mb-2" size={20} />
-                <span className="text-sm font-medium text-purple-700">Reports</span>
-              </motion.button>
-              <motion.button 
-                whileHover={{ y: -2 }}
-                className="flex flex-col items-center p-4 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors"
-              >
-                <Download className="text-emerald-600 mb-2" size={20} />
-                <span className="text-sm font-medium text-emerald-700">Export</span>
-              </motion.button>
-              <motion.button 
-                whileHover={{ y: -2 }}
-                className="flex flex-col items-center p-4 bg-amber-50 hover:bg-amber-100 rounded-xl transition-colors"
-              >
-                <AlertCircle className="text-amber-600 mb-2" size={20} />
-                <span className="text-sm font-medium text-amber-700">Alerts</span>
-              </motion.button>
-            </div>
-          </motion.div>
         </div>
       </div>
       
@@ -236,7 +191,7 @@ const DashboardPage: React.FC = () => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.5 }}
-        className="bg-white p-4 rounded-2xl shadow-lg border border-gray-200/70 flex flex-wrap items-center justify-between gap-4"
+        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-wrap items-center justify-between gap-3"
       >
         <div className="flex items-center space-x-3">
           <div className="flex items-center">
@@ -251,16 +206,16 @@ const DashboardPage: React.FC = () => {
         </div>
         <div className="flex space-x-3">
           <motion.button 
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-xl transition-all"
+            className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg transition-all border border-gray-200"
           >
             Generate Report
           </motion.button>
           <motion.button 
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-sm font-medium rounded-xl shadow-md hover:shadow-lg transition-all"
+            className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-indigo-700 transition-all"
           >
             New Print Job
           </motion.button>

@@ -11,11 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   HelpCircle,
-  LogOut,
-  Package,
-  FileText,
-  CheckCircle,
-  Clock
+  LogOut
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -47,28 +43,6 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       path: '/queue', 
       icon: <Printer className="text-blue-400" size={20} />, 
       count: 5 
-    },
-    { 
-      label: 'Commandes', 
-      path: '/orders', 
-      icon: <Package className="text-cyan-400" size={20} />,
-      subItems: [
-        { 
-          label: 'Nouvelles', 
-          path: '/orders/new', 
-          icon: <FileText className="text-cyan-300" size={16} /> 
-        },
-        { 
-          label: 'En traitement', 
-          path: '/orders/processing', 
-          icon: <Clock className="text-amber-300" size={16} /> 
-        },
-        { 
-          label: 'Terminées', 
-          path: '/orders/completed', 
-          icon: <CheckCircle className="text-emerald-400" size={16} /> 
-        },
-      ]
     },
     { 
       label: 'Clients', 

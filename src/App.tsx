@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import PageLayout from './components/layout/PageLayout';
 import DashboardPage from './pages/DashboardPage';
 import PrintQueuePage from './pages/PrintQueuePage';
-import OrdersPage from './pages/OrdersPage';
 import ClientsPage from './pages/ClientsPage';
 import DeliveryPage from './pages/DeliveryPage';
 import NotificationsPage from './pages/NotificationsPage';
@@ -16,7 +15,6 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/queue" element={<PrintQueuePage />} />
-          <Route path="/orders" element={<OrdersPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/delivery" element={<DeliveryPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
