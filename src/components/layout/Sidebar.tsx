@@ -4,6 +4,7 @@ import {
   Printer, 
   Users, 
   Truck, 
+  MessageCircle,
   Bell, 
   Settings,
   Menu,
@@ -53,6 +54,12 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       label: 'Livraison', 
       path: '/delivery', 
       icon: <Truck className="text-amber-400" size={20} /> 
+    },
+    { 
+      label: 'Chat', 
+      path: '/chat', 
+      icon: <MessageCircle className="text-green-400" size={20} />,
+      count: 2
     },
     { 
       label: 'Notifications', 
@@ -105,8 +112,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
         <div className="p-5 border-b border-gray-800">
           <h2 className="text-xl font-bold text-white flex items-center">
             <Printer className="mr-2 text-indigo-400" size={24} />
-            <span className="bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">
-              PrintMaster Pro
+            <span>
+              <span className="text-white">Print</span>
+              <span className="text-blue-400">Easy</span>
             </span>
           </h2>
         </div>
@@ -186,7 +194,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </div>
             <div className="ml-3">
               <p className="text-sm font-medium text-white">Admin User</p>
-              <p className="text-xs text-gray-400">admin@printmaster.com</p>
+              <p className="text-xs text-gray-400">admin@printeasy.com</p>
             </div>
           </div>
 

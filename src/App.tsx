@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage';
 import PrintQueuePage from './pages/PrintQueuePage';
 import ClientsPage from './pages/ClientsPage';
 import DeliveryPage from './pages/DeliveryPage';
+import ChatPage from './pages/ChatPage'; 
 import NotificationsPage from './pages/NotificationsPage';
 import SettingsPage from './pages/SettingsPage';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/queue" element={<PrintQueuePage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/delivery" element={<DeliveryPage />} />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
