@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { PrinterIcon, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { PrinterIcon, Eye, X } from 'lucide-react';
 
 interface PrintJob {
   id: string;
@@ -11,11 +11,20 @@ interface PrintJob {
   status: 'pending' | 'printing' | 'completed' | 'failed';
   type: string;
   time: string;
-  content?: string;
+  copies?: number;
+  paperType?: string;
+  color?: string;
+  weight?: string;
+  stapling?: string;
+  coating?: string;
+  binding?: string;
+  amount?: string;
 }
 
 const PrintQueuePage: React.FC = () => {
   const [jobs] = useState<PrintJob[]>(mockPrintJobs);
+  const [selectedJob, setSelectedJob] = useState<PrintJob | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePrint = (job: PrintJob) => {
     const printWindow = window.open('', '_blank');
@@ -27,16 +36,13 @@ const PrintQueuePage: React.FC = () => {
             <style>
               body { font-family: Arial; padding: 20px; }
               h1 { color: #333; }
-              pre { background: #f5f5f5; padding: 15px; border-radius: 5px; }
             </style>
           </head>
           <body>
             <h1>${job.document}</h1>
             <p><strong>Client:</strong> ${job.client}</p>
             <p><strong>Type:</strong> ${job.type}</p>
-            <p><strong>Format:</strong> ${job.format} - ${job.pages} pages</p>
-            <hr>
-            <pre>${job.content || 'No content available'}</pre>
+            <p><strong>Format:</strong> ${job.format}</p>
           </body>
         </html>
       `);
@@ -46,42 +52,25 @@ const PrintQueuePage: React.FC = () => {
   };
 
   const handleView = (job: PrintJob) => {
-    const viewWindow = window.open('', '_blank');
-    if (viewWindow) {
-      viewWindow.document.write(`
-        <html>
-          <head>
-            <title>Viewing: ${job.document}</title>
-            <style>
-              body { font-family: Arial; padding: 20px; }
-              h1 { color: #333; }
-              pre { background: #f5f5f5; padding: 15px; border-radius: 5px; }
-            </style>
-          </head>
-          <body>
-            <h1>${job.document}</h1>
-            <p><strong>Client:</strong> ${job.client}</p>
-            <p><strong>Type:</strong> ${job.type}</p>
-            <p><strong>Format:</strong> ${job.format} - ${job.pages} pages</p>
-            <hr>
-            <pre>${job.content || 'No content available'}</pre>
-          </body>
-        </html>
-      `);
-      viewWindow.document.close();
-    }
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedJob(null);
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 relative">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Print Queue</h1>
-        <p className="text-gray-500 mt-1">Current print jobs</p>
+        <h1 className="text-3xl font-bold text-gray-800">File d'impression</h1>
+        <p className="text-gray-500 mt-1">Gestion des travaux d'impression en cours</p>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow overflow-hidden">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -89,9 +78,7 @@ const PrintQueuePage: React.FC = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Document</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pages</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Received</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reçu le</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -109,35 +96,23 @@ const PrintQueuePage: React.FC = () => {
                     <div className="text-sm text-gray-900">{job.format}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{job.pages}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{job.received}</div>
                     <div className="text-xs text-gray-500">{job.time}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      job.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      job.status === 'printing' ? 'bg-blue-100 text-blue-800' :
-                      job.status === 'failed' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {job.status}
-                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleView(job)}
                         className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
-                        title="View"
+                        title="Voir les détails"
                       >
                         <Eye size={18} />
                       </button>
                       <button
                         onClick={() => handlePrint(job)}
                         className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-md transition-colors"
-                        title="Print"
+                        title="Imprimer"
+                        disabled={job.status === 'completed'}
                       >
                         <PrinterIcon size={18} />
                       </button>
@@ -149,6 +124,101 @@ const PrintQueuePage: React.FC = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal pour afficher les détails */}
+      {isModalOpen && selectedJob && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b p-4">
+              <h2 className="text-xl font-bold text-gray-800">Détails d'impression</h2>
+              <button 
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-gray-700 mb-2">Date :</h3>
+                    <p className="text-gray-900">{selectedJob.received} à {selectedJob.time}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-gray-700 mb-2">Client :</h3>
+                    <p className="text-gray-900">{selectedJob.client}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-gray-700 mb-2">Document :</h3>
+                    <p className="text-gray-900">{selectedJob.document}</p>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-gray-700 mb-2">Type :</h3>
+                    <p className="text-gray-900">{selectedJob.type}</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-6 mt-6">
+                  <h3 className="font-semibold text-xl text-gray-800 mb-4">Paramètres d'impression</h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Format :</h4>
+                      <p className="text-gray-900">{selectedJob.format}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Pages :</h4>
+                      <p className="text-gray-900">{selectedJob.pages}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Copies :</h4>
+                      <p className="text-gray-900">{selectedJob.copies || '1'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Type de papier :</h4>
+                      <p className="text-gray-900">{selectedJob.paperType || 'Standard'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Couleur :</h4>
+                      <p className="text-gray-900">{selectedJob.color || (selectedJob.format.includes('Color') ? 'Couleur' : 'Noir & blanc')}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Grammage :</h4>
+                      <p className="text-gray-900">{selectedJob.weight || 'Standard'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Agrafage :</h4>
+                      <p className="text-gray-900">{selectedJob.stapling || 'Non'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Reliure :</h4>
+                      <p className="text-gray-900">{selectedJob.binding || 'Aucune'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Pelliculage :</h4>
+                      <p className="text-gray-900">{selectedJob.coating || 'Aucun'}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-medium text-gray-700 mb-2">Montant :</h4>
+                      <p className="text-gray-900">{selectedJob.amount || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t p-4 flex justify-end">
+              <button
+                onClick={closeModal}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -157,6 +227,25 @@ const PrintQueuePage: React.FC = () => {
 const mockPrintJobs: PrintJob[] = [
   {
     id: '1',
+    client: 'Jean Dupont',
+    document: 'affiche_conférence.png',
+    format: 'A4',
+    pages: 1,
+    received: '12/04/2025',
+    status: 'printing',
+    type: 'Image',
+    time: '12:17:03',
+    copies: 50,
+    paperType: 'Brillant',
+    color: 'Noir & blanc',
+    weight: '80g',
+    stapling: 'Non',
+    coating: 'Aucun',
+    binding: 'Spirale métal',
+    amount: '7500 fcfa'
+  },
+  {
+    id: '2',
     client: 'Retail Partners',
     document: 'Marketing Materials',
     format: 'A4 Color',
@@ -165,10 +254,15 @@ const mockPrintJobs: PrintJob[] = [
     status: 'completed',
     type: 'Single-sided',
     time: '12:00:00',
-    content: 'Marketing materials for Q2 campaign\n\nIncludes:\n- Flyers\n- Brochures\n- Posters'
+    copies: 1,
+    paperType: 'Mat',
+    color: 'Couleur',
+    weight: '120g',
+    binding: 'Reliure thermocollée',
+    amount: '15000 fcfa'
   },
   {
-    id: '2',
+    id: '3',
     client: 'Legal Associates',
     document: 'Contract Documents',
     format: 'A4 B&W',
@@ -177,31 +271,8 @@ const mockPrintJobs: PrintJob[] = [
     status: 'printing',
     type: 'Double-sided',
     time: '11:30:00',
-    content: 'Legal contracts for client review\n\nSections:\n1. Terms and Conditions\n2. Confidentiality\n3. Payment Terms'
-  },
-  {
-    id: '3',
-    client: 'Global Industries',
-    document: 'Financial Report',
-    format: 'A4 B&W',
-    pages: 18,
-    received: '15/03/2025',
-    status: 'pending',
-    type: 'Single-sided',
-    time: '11:15:00',
-    content: 'Q1 Financial Report\n\nHighlights:\n- Revenue: $1.5M\n- Expenses: $1.1M\n- Net Profit: $400K'
-  },
-  {
-    id: '4',
-    client: 'Acme Corporation',
-    document: 'Product Catalog',
-    format: 'A4 Color',
-    pages: 42,
-    received: '15/03/2025',
-    status: 'pending',
-    type: 'Double-sided',
-    time: '10:30:00',
-    content: 'Spring 2025 Product Catalog\n\nFeatured Products:\n- Widget X\n- Gadget Y\n- Tool Z'
+    copies: 3,
+    binding: 'Reliure à anneaux'
   },
 ];
 

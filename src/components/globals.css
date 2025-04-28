@@ -1,0 +1,20 @@
+/* Styles pour la carte */
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .custom-icon {
+    background: transparent;
+    border: none;
+  }
+  
+  /* Animation des marqueurs */
+  .custom-icon svg {
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+    transition: transform 0.2s ease;
+  }
+  
+  .custom-icon:hover svg {
+    transform: scale(1.2);
+  }

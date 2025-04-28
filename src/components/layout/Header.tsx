@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Search, User, ChevronDown, LogOut, Settings, HelpCircle } from 'lucide-react';
+import { Bell, User, ChevronDown, LogOut, Settings, HelpCircle } from 'lucide-react';
 import { mockNotifications } from '../../data/mockData';
 
 const Header: React.FC = () => {
@@ -10,19 +10,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-white shadow-sm py-3 px-6 flex justify-between items-center border-b border-gray-200">
-      <div className="flex-1">
-        <div className="relative w-full max-w-md">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-50 text-gray-800 placeholder-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-          />
-          <Search 
-            size={20} 
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" 
-          />
-        </div>
-      </div>
+      <div className="flex-1"></div>
       
       <div className="flex items-center space-x-4">
         {/* Notifications */}
