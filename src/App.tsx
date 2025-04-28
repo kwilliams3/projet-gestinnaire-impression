@@ -8,6 +8,7 @@ import DeliveryPage from './pages/DeliveryPage';
 import ChatPage from './pages/ChatPage'; 
 import NotificationsPage from './pages/NotificationsPage';
 import SettingsPage from './pages/SettingsPage';
+import HistoryPage from './pages/HistoryPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/History" element={<HistoryPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </PageLayout>
