@@ -57,7 +57,7 @@ const DashboardPage: React.FC = () => {
     documents: { count: timeRange === 'week' ? 156 : timeRange === 'month' ? 620 : 1850, change: -3.4, isPositive: false },
   };
 
-  // Nouveaux graphiques
+  // Graphique des revenus
   const getRevenueChartData = () => {
     if (timeRange === 'week') {
       return {
@@ -116,6 +116,7 @@ const DashboardPage: React.FC = () => {
     }
   };
 
+  // Répartition des produits
   const getProductDistributionData = () => {
     return {
       labels: ['Cartes de visite', 'Flyers', 'Brochures', 'Affiches', 'Autres'],
@@ -123,18 +124,18 @@ const DashboardPage: React.FC = () => {
         {
           data: [35, 25, 20, 15, 5],
           backgroundColor: [
-            'rgba(99, 102, 241, 0.8)',
-            'rgba(79, 70, 229, 0.8)',
-            'rgba(67, 56, 202, 0.8)',
-            'rgba(55, 48, 163, 0.8)',
-            'rgba(49, 46, 129, 0.8)'
+            'rgba(99, 102, 241, 0.8)', // indigo
+            'rgba(16, 185, 129, 0.8)', // emerald
+            'rgba(245, 158, 11, 0.8)', // amber
+            'rgba(239, 68, 68, 0.8)', // red
+            'rgba(139, 92, 246, 0.8)' // violet
           ],
           borderColor: [
             'rgba(99, 102, 241, 1)',
-            'rgba(79, 70, 229, 1)',
-            'rgba(67, 56, 202, 1)',
-            'rgba(55, 48, 163, 1)',
-            'rgba(49, 46, 129, 1)'
+            'rgba(16, 185, 129, 1)',
+            'rgba(245, 158, 11, 1)',
+            'rgba(239, 68, 68, 1)',
+            'rgba(139, 92, 246, 1)'
           ],
           borderWidth: 1
         }
@@ -142,6 +143,7 @@ const DashboardPage: React.FC = () => {
     };
   };
 
+  // Activité client
   const getClientActivityData = () => {
     if (timeRange === 'week') {
       return {
@@ -303,13 +305,20 @@ const DashboardPage: React.FC = () => {
   const pieChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 40,
+        bottom: 20
+      }
+    },
     plugins: {
       legend: {
-        position: 'right' as const,
+        position: 'bottom' as const,
         labels: {
           color: '#6B7280',
           font: {
             family: "'Inter', sans-serif",
+            size: 12
           },
           padding: 20,
           usePointStyle: true,
@@ -365,7 +374,7 @@ const DashboardPage: React.FC = () => {
         {/* Revenue Card */}
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-gradient-to-br from-indigo-600 to-indigo-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden"
+          className="bg-gradient-to-br from-indigo-600/80 to-indigo-500/80 hover:from-indigo-600 hover:to-indigo-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden transition-all duration-300"
         >
           <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-bl-full"></div>
           <div className="flex items-center justify-between relative z-10">
@@ -380,7 +389,7 @@ const DashboardPage: React.FC = () => {
                 <span className="text-xs ml-1 text-indigo-100">vs période précédente</span>
               </div>
             </div>
-            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
               <FaDollarSign className="text-xl" />
             </div>
           </div>
@@ -389,7 +398,7 @@ const DashboardPage: React.FC = () => {
         {/* Impressions Card */}
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-gradient-to-br from-blue-600 to-blue-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden"
+          className="bg-gradient-to-br from-blue-600/80 to-blue-500/80 hover:from-blue-600 hover:to-blue-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden transition-all duration-300"
         >
           <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-bl-full"></div>
           <div className="flex items-center justify-between relative z-10">
@@ -404,7 +413,7 @@ const DashboardPage: React.FC = () => {
                 <span className="text-xs ml-1 text-blue-100">vs période précédente</span>
               </div>
             </div>
-            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
               <FaPrint className="text-xl" />
             </div>
           </div>
@@ -413,7 +422,7 @@ const DashboardPage: React.FC = () => {
         {/* Clients Card */}
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-gradient-to-br from-purple-600 to-purple-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden"
+          className="bg-gradient-to-br from-purple-600/80 to-purple-500/80 hover:from-purple-600 hover:to-purple-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden transition-all duration-300"
         >
           <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-bl-full"></div>
           <div className="flex items-center justify-between relative z-10">
@@ -428,7 +437,7 @@ const DashboardPage: React.FC = () => {
                 <span className="text-xs ml-1 text-purple-100">vs période précédente</span>
               </div>
             </div>
-            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
               <FaUserFriends className="text-xl" />
             </div>
           </div>
@@ -437,7 +446,7 @@ const DashboardPage: React.FC = () => {
         {/* Documents Card */}
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-gradient-to-br from-red-600 to-red-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden"
+          className="bg-gradient-to-br from-red-600/80 to-red-500/80 hover:from-red-600 hover:to-red-500 p-6 rounded-2xl shadow-lg text-white relative overflow-hidden transition-all duration-300"
         >
           <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-bl-full"></div>
           <div className="flex items-center justify-between relative z-10">
@@ -452,7 +461,7 @@ const DashboardPage: React.FC = () => {
                 <span className="text-xs ml-1 text-red-100">vs période précédente</span>
               </div>
             </div>
-            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+            <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
               <FaFileAlt className="text-xl" />
             </div>
           </div>
@@ -494,8 +503,22 @@ const DashboardPage: React.FC = () => {
               Répartition des produits
             </h2>
           </div>
-          <div className="h-80">
-            <Pie data={getProductDistributionData()} options={pieChartOptions} />
+          <div className="h-[400px] flex flex-col">
+            <div className="flex-1">
+              <Pie 
+                data={getProductDistributionData()} 
+                options={{
+                  ...pieChartOptions,
+                  plugins: {
+                    ...pieChartOptions.plugins,
+                    legend: {
+                      ...pieChartOptions.plugins.legend,
+                      position: 'bottom'
+                    }
+                  }
+                }} 
+              />
+            </div>
           </div>
         </div>
       </div>
