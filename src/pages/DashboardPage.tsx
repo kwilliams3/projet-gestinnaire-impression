@@ -25,6 +25,9 @@ import {
   FaFilter
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import fr from 'date-fns/locale/fr';
 
 ChartJS.register(
   CategoryScale, 
@@ -43,6 +46,26 @@ type TimeRange = 'week' | 'month' | 'quarter';
 
 const DashboardPage: React.FC = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>('week');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Données de revenus par jour (simulées)
+  const dailyRevenueData = {
+    '2023-06-12': 45000,
+    '2023-06-13': 75000,
+    '2023-06-14': 110000,
+    '2023-06-15': 55000,
+    '2023-06-16': 85000,
+    '2023-06-17': 25000,
+    '2023-06-18': 105000,
+  };
+
+  // Obtenir le revenu pour une date spécifique
+  const getRevenueForDate = (date: Date | null) => {
+    if (!date) return null;
+    const dateStr = date.toISOString().split('T')[0];
+    return dailyRevenueData[dateStr as keyof typeof dailyRevenueData] || null;
+  };
 
   // Données dynamiques basées sur la période sélectionnée
   const revenueData = {
@@ -116,7 +139,6 @@ const DashboardPage: React.FC = () => {
     }
   };
 
-  // Répartition des produits
   const getProductDistributionData = () => {
     return {
       labels: ['Cartes de visite', 'Flyers', 'Brochures', 'Affiches', 'Autres'],
@@ -124,11 +146,11 @@ const DashboardPage: React.FC = () => {
         {
           data: [35, 25, 20, 15, 5],
           backgroundColor: [
-            'rgba(99, 102, 241, 0.8)', // indigo
-            'rgba(16, 185, 129, 0.8)', // emerald
-            'rgba(245, 158, 11, 0.8)', // amber
-            'rgba(239, 68, 68, 0.8)', // red
-            'rgba(139, 92, 246, 0.8)' // violet
+            'rgba(99, 102, 241, 0.8)',
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(245, 158, 11, 0.8)',
+            'rgba(239, 68, 68, 0.8)',
+            'rgba(139, 92, 246, 0.8)'
           ],
           borderColor: [
             'rgba(99, 102, 241, 1)',
@@ -143,7 +165,6 @@ const DashboardPage: React.FC = () => {
     };
   };
 
-  // Activité client
   const getClientActivityData = () => {
     if (timeRange === 'week') {
       return {
@@ -202,7 +223,6 @@ const DashboardPage: React.FC = () => {
     }
   };
 
-  // Options des graphiques
   const lineChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -478,7 +498,13 @@ const DashboardPage: React.FC = () => {
               Tendance des revenus {timeRange === 'week' ? 'hebdomadaire' : timeRange === 'month' ? 'mensuelle' : 'trimestrielle'}
             </h2>
             <div className="flex items-center space-x-2">
-              <FaFilter className="text-gray-400" />
+              <button 
+                onClick={() => setShowDatePicker(!showDatePicker)}
+                className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-sm flex items-center hover:bg-indigo-200 transition-colors"
+              >
+                <FaCalendarAlt className="mr-2" />
+                Sélectionner une date
+              </button>
               <select 
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value as TimeRange)}
@@ -490,6 +516,32 @@ const DashboardPage: React.FC = () => {
               </select>
             </div>
           </div>
+
+          {showDatePicker && (
+            <div className="mb-4 flex justify-center">
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                  setShowDatePicker(false);
+                }}
+                locale={fr}
+                dateFormat="dd/MM/yyyy"
+                className="border border-gray-300 rounded-lg p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                inline
+              />
+            </div>
+          )}
+
+          {selectedDate && getRevenueForDate(selectedDate) && (
+            <div className="mb-4 p-3 bg-indigo-50 rounded-lg">
+              <p className="text-indigo-800 font-medium">
+                Revenu pour le {selectedDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })} : 
+                <span className="ml-2 font-bold">{getRevenueForDate(selectedDate)?.toLocaleString()} XAF</span>
+              </p>
+            </div>
+          )}
+
           <div className="h-80">
             <Line data={getRevenueChartData()} options={lineChartOptions} />
           </div>
