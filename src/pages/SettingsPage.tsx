@@ -21,29 +21,29 @@ import {
 const SettingsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'team' | 'landing' | 'account'>('team');
   
-  // Landing Page Settings
+  // Paramètres de la page d'accueil
   const [landingSettings, setLandingSettings] = useState({
     defaultPage: '/dashboard',
     header: {
-      title: 'My Application',
+      title: 'Mon Application',
       logo: '',
       showSearch: true,
       backgroundColor: '#ffffff',
       textColor: '#374151'
     },
     footer: {
-      text: '© 2023 My Application. All rights reserved.',
+      text: '© 2023 Mon Application. Tous droits réservés.',
       showFooter: true,
       backgroundColor: '#f9fafb',
       textColor: '#6b7280',
       links: [
-        { text: 'Privacy Policy', url: '/privacy' },
-        { text: 'Terms of Service', url: '/terms' }
+        { text: 'Politique de Confidentialité', url: '/privacy' },
+        { text: 'Conditions d\'Utilisation', url: '/terms' }
       ]
     }
   });
 
-  // Account Settings
+  // Paramètres du compte
   const [accountSettings, setAccountSettings] = useState({
     firstName: 'John',
     lastName: 'Doe',
@@ -131,16 +131,16 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h1 className="text-3xl font-bold text-gray-800">Application Settings</h1>
-        <p className="text-gray-500 mt-1">Customize your application appearance and manage your account</p>
+        <h1 className="text-3xl font-bold text-gray-800">Paramètres de l'Application</h1>
+        <p className="text-gray-500 mt-1">Personnalisez l'apparence de votre application et gérez votre compte</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
-        {/* Settings Navigation */}
+        {/* Navigation des Paramètres */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
             <div className="p-4 border-b border-gray-100 bg-gray-50">
-              <h3 className="text-lg font-medium text-gray-800">Settings Menu</h3>
+              <h3 className="text-lg font-medium text-gray-800">Menu des Paramètres</h3>
             </div>
             <div className="space-y-1 p-2">
               <button 
@@ -148,50 +148,50 @@ const SettingsPage: React.FC = () => {
                 className={`w-full flex items-center px-4 py-3 rounded-md text-left transition-colors ${activeTab === 'team' ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
               >
                 <Users size={18} className="mr-3 flex-shrink-0" />
-                <span>Team Management</span>
+                <span>Gestion de l'Équipe</span>
               </button>
               <button 
                 onClick={() => setActiveTab('landing')}
                 className={`w-full flex items-center px-4 py-3 rounded-md text-left transition-colors ${activeTab === 'landing' ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
               >
                 <Layout size={18} className="mr-3 flex-shrink-0" />
-                <span>Landing Page</span>
+                <span>Page d'Accueil</span>
               </button>
               <button 
                 onClick={() => setActiveTab('account')}
                 className={`w-full flex items-center px-4 py-3 rounded-md text-left transition-colors ${activeTab === 'account' ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
               >
                 <User size={18} className="mr-3 flex-shrink-0" />
-                <span>My Account</span>
+                <span>Mon Compte</span>
               </button>
             </div>
           </div>
         </div>
         
-        {/* Settings Content */}
+        {/* Contenu des Paramètres */}
         <div className="lg:col-span-5">
           {activeTab === 'team' && (
             <div className="bg-white rounded-lg shadow-sm border border-gray-100">
               <div className="p-6 border-b border-gray-100 bg-gray-50">
                 <h2 className="text-xl font-semibold text-gray-800 flex items-center">
                   <Users className="mr-2" size={20} />
-                  Team Management
+                  Gestion de l'Équipe
                 </h2>
               </div>
               
               <div className="p-6">
                 <p className="text-gray-600 mb-4">
-                  Manage your team members and their access permissions.
+                  Gérez vos membres d'équipe et leurs autorisations d'accès.
                 </p>
                 
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-gray-700">
                     <thead className="text-xs uppercase bg-gray-50 text-gray-500">
                       <tr>
-                        <th className="px-6 py-3">Name</th>
-                        <th className="px-6 py-3">Role</th>
+                        <th className="px-6 py-3">Nom</th>
+                        <th className="px-6 py-3">Rôle</th>
                         <th className="px-6 py-3">Email</th>
-                        <th className="px-6 py-3">Phone</th>
+                        <th className="px-6 py-3">Téléphone</th>
                         <th className="px-6 py-3 text-right">Actions</th>
                       </tr>
                     </thead>
@@ -236,21 +236,21 @@ const SettingsPage: React.FC = () => {
               <div className="p-6 border-b border-gray-100 bg-gray-50">
                 <h2 className="text-xl font-semibold text-gray-800 flex items-center">
                   <Layout className="mr-2" size={20} />
-                  Landing Page Customization
+                  Personnalisation de la Page d'Accueil
                 </h2>
               </div>
               
               <div className="p-6 space-y-8">
-                {/* Default Page Section */}
+                {/* Section de la Page par Défaut */}
                 <div className="bg-gray-50 p-5 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
                     <Home className="mr-2" size={18} />
-                    Default Page Settings
+                    Paramètres de la Page d'Accueil
                   </h3>
                   <div className="space-y-4">
                     <div>
                       <label htmlFor="defaultPage" className="block text-sm font-medium text-gray-700 mb-1">
-                        Landing Page
+                        Page d'Accueil
                       </label>
                       <div className="relative">
                         <select
@@ -260,10 +260,10 @@ const SettingsPage: React.FC = () => {
                           onChange={handleLandingSettingChange}
                           className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md appearance-none"
                         >
-                          <option value="/dashboard">Dashboard</option>
-                          <option value="/reports">Reports</option>
-                          <option value="/calendar">Calendar</option>
-                          <option value="/settings">Settings</option>
+                          <option value="/dashboard">Tableau de Bord</option>
+                          <option value="/reports">Rapports</option>
+                          <option value="/calendar">Calendrier</option>
+                          <option value="/settings">Paramètres</option>
                         </select>
                         <ChevronDown className="absolute right-3 top-3 text-gray-400" size={16} />
                       </div>
@@ -271,16 +271,16 @@ const SettingsPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Header Configuration */}
+                {/* Configuration de l'En-tête */}
                 <div className="bg-gray-50 p-5 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
                     <PanelTop className="mr-2" size={18} />
-                    Header Configuration
+                    Configuration de l'En-tête
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="headerTitle" className="block text-sm font-medium text-gray-700 mb-1">
-                        Header Title
+                        Titre de l'En-tête
                       </label>
                       <input
                         type="text"
@@ -293,7 +293,7 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="headerLogo" className="block text-sm font-medium text-gray-700 mb-1">
-                        Logo URL
+                        URL du Logo
                       </label>
                       <div className="flex">
                         <input
@@ -312,12 +312,12 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Header Colors
+                        Couleurs de l'En-tête
                       </label>
                       <div className="flex space-x-4">
                         <div className="flex-1">
                           <label htmlFor="headerBgColor" className="block text-xs text-gray-500 mb-1">
-                            Background
+                            Arrière-plan
                           </label>
                           <div className="flex items-center">
                             <input
@@ -335,7 +335,7 @@ const SettingsPage: React.FC = () => {
                         </div>
                         <div className="flex-1">
                           <label htmlFor="headerTextColor" className="block text-xs text-gray-500 mb-1">
-                            Text
+                            Texte
                           </label>
                           <div className="flex items-center">
                             <input
@@ -370,17 +370,17 @@ const SettingsPage: React.FC = () => {
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                       />
                       <label htmlFor="showSearch" className="ml-2 block text-sm text-gray-700">
-                        Show Search Bar
+                        Afficher la Barre de Recherche
                       </label>
                     </div>
                   </div>
                 </div>
 
-                {/* Footer Configuration */}
+                {/* Configuration du Pied de Page */}
                 <div className="bg-gray-50 p-5 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
                     <FileText className="mr-2" size={18} />
-                    Footer Configuration
+                    Configuration du Pied de Page
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-center">
@@ -400,13 +400,13 @@ const SettingsPage: React.FC = () => {
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                       />
                       <label htmlFor="showFooter" className="ml-2 block text-sm text-gray-700">
-                        Show Footer
+                        Afficher le Pied de Page
                       </label>
                     </div>
                     
                     <div>
                       <label htmlFor="footerText" className="block text-sm font-medium text-gray-700 mb-1">
-                        Footer Text
+                        Texte du Pied de Page
                       </label>
                       <input
                         type="text"
@@ -420,12 +420,12 @@ const SettingsPage: React.FC = () => {
                     
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Footer Colors
+                        Couleurs du Pied de Page
                       </label>
                       <div className="flex space-x-4">
                         <div className="flex-1">
                           <label htmlFor="footerBgColor" className="block text-xs text-gray-500 mb-1">
-                            Background
+                            Arrière-plan
                           </label>
                           <div className="flex items-center">
                             <input
@@ -443,7 +443,7 @@ const SettingsPage: React.FC = () => {
                         </div>
                         <div className="flex-1">
                           <label htmlFor="footerTextColor" className="block text-xs text-gray-500 mb-1">
-                            Text
+                            Texte
                           </label>
                           <div className="flex items-center">
                             <input
@@ -461,10 +461,9 @@ const SettingsPage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Footer Links
+                        Liens du Pied de Page
                       </label>
                       <div className="space-y-3">
                         {landingSettings.footer.links.map((link, index) => (
@@ -473,7 +472,7 @@ const SettingsPage: React.FC = () => {
                               type="text"
                               value={link.text}
                               onChange={(e) => updateFooterLink(index, 'text', e.target.value)}
-                              placeholder="Link Text"
+                              placeholder="Texte du Lien"
                               className="flex-1 block shadow-sm sm:text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                             />
                             <input
@@ -495,7 +494,7 @@ const SettingsPage: React.FC = () => {
                           onClick={addFooterLink}
                           className="mt-2 inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
-                          + Add Link
+                          + Ajouter un Lien
                         </button>
                       </div>
                     </div>
@@ -507,7 +506,7 @@ const SettingsPage: React.FC = () => {
                     type="button"
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
-                    Save Landing Page Settings
+                    Enregistrer les Paramètres de la Page d'Accueil
                   </button>
                 </div>
               </div>
@@ -519,7 +518,7 @@ const SettingsPage: React.FC = () => {
               <div className="p-6 border-b border-gray-100 bg-gray-50">
                 <h2 className="text-xl font-semibold text-gray-800 flex items-center">
                   <User className="mr-2" size={20} />
-                  Account Settings
+                  Paramètres du Compte
                 </h2>
               </div>
               
@@ -527,12 +526,12 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-50 p-5 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
                     <User className="mr-2" size={18} />
-                    Personal Information
+                    Informations Personnelles
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                        First Name
+                        Prénom
                       </label>
                       <input
                         type="text"
@@ -545,7 +544,7 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Name
+                        Nom
                       </label>
                       <input
                         type="text"
@@ -558,7 +557,7 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div className="md:col-span-2">
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Email Address
+                        Adresse Email
                       </label>
                       <input
                         type="email"
@@ -575,12 +574,12 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-50 p-5 rounded-lg">
                   <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center">
                     <Lock className="mr-2" size={18} />
-                    Change Password
+                    Changer le Mot de Passe
                   </h3>
                   <div className="grid grid-cols-1 gap-6">
                     <div>
                       <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                        Current Password
+                        Mot de Passe Actuel
                       </label>
                       <div className="relative">
                         <input
@@ -596,7 +595,7 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                        New Password
+                        Nouveau Mot de Passe
                       </label>
                       <div className="relative">
                         <input
@@ -612,7 +611,7 @@ const SettingsPage: React.FC = () => {
                     </div>
                     <div>
                       <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                        Confirm New Password
+                        Confirmer le Nouveau Mot de Passe
                       </label>
                       <div className="relative">
                         <input
@@ -634,7 +633,7 @@ const SettingsPage: React.FC = () => {
                     type="button"
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
-                    Save Account Changes
+                    Enregistrer les Modifications du Compte
                   </button>
                 </div>
               </div>
